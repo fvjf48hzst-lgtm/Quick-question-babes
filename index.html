@@ -21,19 +21,12 @@
   <source src="./background.m4a" type="audio/mp4">
 </audio>
 
-<button id="playMusic">🎵 Tap to play music</button>
-
 <script>
   const music = document.getElementById("music");
-  const playButton = document.getElementById("playMusic");
+  const yesButton = document.querySelector(".yes");
 
-  playButton.addEventListener("click", async () => {
-    try {
-      await music.play();
-      playButton.style.display = "none";
-    } catch (error) {
-      console.log("Music couldn't play:", error);
-    }
+  yesButton.addEventListener("click", function () {
+    music.play();
   });
 </script>
       margin: 0;
