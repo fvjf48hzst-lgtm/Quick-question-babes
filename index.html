@@ -1,101 +1,410 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>I Love You 💕</title>
-<style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;margin:0}
-body{
-  overflow:hidden;display:flex;align-items:center;justify-content:center;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:linear-gradient(135deg,#ffd3e4,#fff5f9);
-}
-.card{width:min(92vw,560px);text-align:center;position:relative;z-index:2}
-.question{
-  background:#ff8fba;color:#fff;border-radius:24px;padding:28px 20px;
-  font-size:clamp(25px,7vw,38px);font-weight:800;
-  box-shadow:0 12px 30px #d45a8738;margin-bottom:25px;
-}
-.stage{position:relative;height:190px;width:100%}
-button{
-  appearance:none;border:0;border-radius:999px;padding:17px 23px;
-  font-size:18px;font-weight:750;box-shadow:0 8px 20px #8d426328;
-  touch-action:none;user-select:none;position:absolute;
-}
-#yes{background:#ff4f91;color:#fff;left:50%;top:0;transform:translateX(-50%)}
-#no{background:#fff;color:#e84b86;left:50%;top:82px;transform:translateX(-50%);transition:left .13s ease,top .13s ease}
-#answer{min-height:45px;color:#d92f72;font-size:23px;font-weight:800}
-.float{position:fixed;bottom:-40px;pointer-events:none;animation:up 7s linear infinite;opacity:.5;font-size:24px}
-@keyframes up{15%{opacity:.5}to{transform:translateY(-115vh) rotate(20deg);opacity:0}}
-.pop{position:fixed;z-index:20;pointer-events:none;font-size:30px;animation:pop .7s ease forwards}
-@keyframes pop{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.6) translateY(-70px);opacity:0}}
-</style>
-</head>
-<body>
-<div class="float" style="left:8%;animation-delay:0s">💕</div>
-<div class="float" style="left:25%;animation-delay:2s">💗</div>
-<div class="float" style="left:47%;animation-delay:4s">❤️</div>
-<div class="float" style="left:70%;animation-delay:1s">💖</div>
-<div class="float" style="left:87%;animation-delay:3s">💕</div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="card">
-  <div class="question">I love you, do you love me back? 💗</div>
-  <div class="stage" id="stage">
-    <button id="yes">Yes, I love you too 💕</button>
-    <button id="no">No I don't 😭</button>
-  </div>
-  <div id="answer"></div>
-</div>
+  <title>Quick Question 💚</title>
 
-<script>
-(function(){
-  const no=document.getElementById('no'), yes=document.getElementById('yes');
-  const stage=document.getElementById('stage'), answer=document.getElementById('answer');
+  <!-- Heavy metal style font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
 
-  function pop(x,y,emoji){
-    const p=document.createElement('div'); p.className='pop'; p.textContent=emoji;
-    p.style.left=(x-15)+'px'; p.style.top=(y-15)+'px'; document.body.appendChild(p);
-    setTimeout(()=>p.remove(),700);
-  }
-
-  function dodge(e){
-    if(e) e.preventDefault();
-    const r=stage.getBoundingClientRect();
-    const b=no.getBoundingClientRect();
-    const pad=5;
-    const maxX=Math.max(pad,r.width-b.width-pad);
-    const maxY=Math.max(pad,r.height-b.height-pad);
-    let x=pad+Math.random()*Math.max(1,maxX-pad);
-    let y=pad+Math.random()*Math.max(1,maxY-pad);
-
-    // Don't place it directly over the Yes button.
-    if(y<65) y=Math.min(maxY,90);
-    no.style.left=x+'px'; no.style.top=y+'px'; no.style.transform='none';
-
-    const cx=e && e.clientX!=null?e.clientX:r.left+r.width/2;
-    const cy=e && e.clientY!=null?e.clientY:r.top+r.height/2;
-    pop(cx,cy,'💥');
-  }
-
-  // pointerdown catches iPhone/iPad touch AND mouse before a click can happen.
-  no.addEventListener('pointerdown',dodge,{passive:false});
-  no.addEventListener('touchstart',dodge,{passive:false});
-  no.addEventListener('mouseenter',dodge);
-
-  yes.addEventListener('click',function(){
-    answer.textContent='I knew it!!! ❤️🥰';
-    yes.textContent='YAY!!! 💕';
-    for(let i=0;i<18;i++){
-      setTimeout(()=>{
-        const x=Math.random()*innerWidth, y=innerHeight*.4+Math.random()*150;
-        pop(x,y,['❤️','💕','💖','💗','🥰'][Math.floor(Math.random()*5)]);
-      },i*45);
+  <style>
+    * {
+      box-sizing: border-box;
     }
-  });
-})();
-</script>
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+
+      background:
+        radial-gradient(circle at center, #145a2a 0%, #08351a 45%, #03150a 100%);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: #d8ffd9;
+      font-family: "Metal Mania", cursive;
+    }
+
+    /* DARK GREEN GLOW */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(circle, rgba(50,255,90,0.12) 1px, transparent 1px);
+
+      background-size: 35px 35px;
+      animation: backgroundMove 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes backgroundMove {
+      from {
+        transform: translate(0, 0);
+      }
+
+      to {
+        transform: translate(35px, 35px);
+      }
+    }
+
+    /* BLACK FLOATING BLOBS */
+    .blob {
+      position: absolute;
+      background: #010201;
+      border-radius: 50%;
+
+      opacity: 0.85;
+
+      box-shadow:
+        0 0 20px rgba(0,0,0,0.8),
+        inset 5px 5px 15px rgba(40,80,45,0.15);
+
+      animation: float 9s infinite ease-in-out;
+
+      z-index: 1;
+    }
+
+    .blob:nth-child(1) {
+      width: 100px;
+      height: 100px;
+      left: 5%;
+      top: 12%;
+      animation-duration: 8s;
+    }
+
+    .blob:nth-child(2) {
+      width: 55px;
+      height: 55px;
+      right: 12%;
+      top: 18%;
+      animation-duration: 10s;
+    }
+
+    .blob:nth-child(3) {
+      width: 140px;
+      height: 140px;
+      right: 2%;
+      bottom: 5%;
+      animation-duration: 12s;
+    }
+
+    .blob:nth-child(4) {
+      width: 70px;
+      height: 70px;
+      left: 12%;
+      bottom: 15%;
+      animation-duration: 7s;
+    }
+
+    .blob:nth-child(5) {
+      width: 45px;
+      height: 45px;
+      left: 48%;
+      top: 7%;
+      animation-duration: 6s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      50% {
+        transform: translate(30px, -35px) rotate(180deg);
+      }
+    }
+
+    /* GLOWING GREEN SPARKS */
+    .spark {
+      position: absolute;
+
+      width: 4px;
+      height: 4px;
+
+      background: #7cff8b;
+      border-radius: 50%;
+
+      box-shadow:
+        0 0 8px #7cff8b,
+        0 0 18px #24ff4b,
+        0 0 30px #00b52b;
+
+      animation: sparkle 2s infinite ease-in-out;
+
+      z-index: 2;
+    }
+
+    @keyframes sparkle {
+      0%, 100% {
+        opacity: 0.1;
+        transform: scale(0.4);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.7);
+      }
+    }
+
+    /* MAIN BOX */
+    .container {
+      position: relative;
+      z-index: 10;
+
+      width: 90%;
+      max-width: 700px;
+
+      text-align: center;
+
+      padding: 50px 25px;
+
+      background: rgba(0, 10, 3, 0.55);
+
+      border: 2px solid rgba(100,255,120,0.25);
+
+      border-radius: 18px;
+
+      backdrop-filter: blur(7px);
+
+      box-shadow:
+        0 0 30px rgba(0,0,0,0.7),
+        0 0 50px rgba(0,255,60,0.08);
+    }
+
+    /* QUESTION */
+    h1 {
+      font-family: "Metal Mania", cursive;
+
+      font-size: clamp(35px, 8vw, 65px);
+
+      line-height: 1.05;
+
+      margin: 0 0 45px;
+
+      color: #e7ffe8;
+
+      letter-spacing: 2px;
+
+      text-shadow:
+        3px 3px 0 #000,
+        0 0 10px #35ff52,
+        0 0 25px rgba(30,255,60,0.45);
+    }
+
+    /* BUTTONS */
+    .buttons {
+      display: flex;
+
+      justify-content: center;
+      align-items: center;
+
+      gap: 20px;
+
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-family: "Metal Mania", cursive;
+
+      border: none;
+
+      padding: 17px 30px;
+
+      font-size: 22px;
+
+      letter-spacing: 1px;
+
+      border-radius: 10px;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+
+    /* YES */
+    #yes {
+      background: #55e66b;
+
+      color: #032009;
+
+      box-shadow:
+        0 6px 0 #145b20,
+        0 0 20px rgba(80,255,100,0.35);
+    }
+
+    #yes:hover {
+      transform: translateY(-4px) scale(1.06);
+
+      box-shadow:
+        0 10px 0 #145b20,
+        0 0 30px rgba(80,255,100,0.6);
+    }
+
+    /* NO */
+    #no {
+      background: #020302;
+
+      color: #eaffeb;
+
+      border: 1px solid #173d1c;
+
+      box-shadow:
+        0 6px 0 #000,
+        0 0 15px rgba(0,0,0,0.8);
+    }
+
+    #no:hover {
+      transform: scale(1.05);
+    }
+
+    /* YES SCREEN */
+    .answer {
+      display: none;
+
+      font-family: "Metal Mania", cursive;
+
+      font-size: clamp(38px, 8vw, 65px);
+
+      line-height: 1.1;
+
+      color: #e7ffe8;
+
+      text-shadow:
+        3px 3px 0 #000,
+        0 0 15px #38ff55,
+        0 0 30px rgba(40,255,70,0.5);
+    }
+
+    .answer.show {
+      display: block;
+    }
+
+    .question.hide {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- BLACK BLOBS -->
+  <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div>
+  <div class="blob"></div>
+
+  <!-- GREEN SPARKS -->
+  <div class="spark" style="left:5%; top:30%; animation-delay:.2s;"></div>
+  <div class="spark" style="left:18%; top:70%; animation-delay:1s;"></div>
+  <div class="spark" style="left:30%; top:12%; animation-delay:.5s;"></div>
+  <div class="spark" style="left:42%; top:85%; animation-delay:1.5s;"></div>
+  <div class="spark" style="left:55%; top:25%; animation-delay:.8s;"></div>
+  <div class="spark" style="left:68%; top:65%; animation-delay:.3s;"></div>
+  <div class="spark" style="left:78%; top:10%; animation-delay:1.2s;"></div>
+  <div class="spark" style="left:90%; top:45%; animation-delay:.7s;"></div>
+  <div class="spark" style="left:12%; top:50%; animation-delay:1.8s;"></div>
+  <div class="spark" style="left:85%; top:80%; animation-delay:.4s;"></div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+
+    <div id="question" class="question">
+
+      <h1>
+        Will you watch Avengers Doomsday with me?
+      </h1>
+
+      <div class="buttons">
+
+        <button id="yes">
+          Yes I will!! 💚
+        </button>
+
+        <button id="no">
+          No I won’t
+        </button>
+
+      </div>
+
+    </div>
+
+    <div id="answer" class="answer">
+      YAY!! 💚😎
+      <br><br>
+      Avengers Doomsday it is!!
+    </div>
+
+  </div>
+
+  <script>
+
+    const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+
+    const question = document.getElementById("question");
+    const answer = document.getElementById("answer");
+
+    /* YES BUTTON */
+
+    yesButton.addEventListener("click", function() {
+
+      question.classList.add("hide");
+
+      answer.classList.add("show");
+
+    });
+
+
+    /* NO BUTTON RUNS AWAY */
+
+    noButton.addEventListener("mouseover", function() {
+
+      const maxX =
+        window.innerWidth -
+        noButton.offsetWidth -
+        20;
+
+      const maxY =
+        window.innerHeight -
+        noButton.offsetHeight -
+        20;
+
+      const randomX =
+        Math.random() * maxX;
+
+      const randomY =
+        Math.random() * maxY;
+
+      noButton.style.position = "fixed";
+
+      noButton.style.left =
+        randomX + "px";
+
+      noButton.style.top =
+        randomY + "px";
+
+    });
+
+
+    noButton.addEventListener("click", function() {
+
+      alert("Nice try 😭");
+
+    });
+
+  </script>
+
 </body>
 </html>
