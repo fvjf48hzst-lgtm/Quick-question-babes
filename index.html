@@ -6,7 +6,6 @@
 
   <title>Quick Question 💚</title>
 
-  <!-- Heavy metal style font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
@@ -15,20 +14,8 @@
     * {
       box-sizing: border-box;
     }
- 
+
     body {
-<audio id="music" loop>
-  <source src="./background.m4a" type="audio/mp4">
-</audio>
-
-<script>
-  const music = document.getElementById("music");
-  const yesButton = document.querySelector(".yes");
-
-  yesButton.addEventListener("click", function () {
-    music.play();
-  });
-</script>
       margin: 0;
       height: 100vh;
       overflow: hidden;
@@ -44,7 +31,6 @@
       font-family: "Metal Mania", cursive;
     }
 
-    /* DARK GREEN GLOW */
     body::before {
       content: "";
       position: absolute;
@@ -69,6 +55,7 @@
     }
 
     /* BLACK FLOATING BLOBS */
+
     .blob {
       position: absolute;
       background: #010201;
@@ -135,7 +122,8 @@
       }
     }
 
-    /* GLOWING GREEN SPARKS */
+    /* GREEN SPARKS */
+
     .spark {
       position: absolute;
 
@@ -168,6 +156,7 @@
     }
 
     /* MAIN BOX */
+
     .container {
       position: relative;
       z-index: 10;
@@ -193,6 +182,7 @@
     }
 
     /* QUESTION */
+
     h1 {
       font-family: "Metal Mania", cursive;
 
@@ -213,6 +203,7 @@
     }
 
     /* BUTTONS */
+
     .buttons {
       display: flex;
 
@@ -245,6 +236,7 @@
     }
 
     /* YES */
+
     #yes {
       background: #55e66b;
 
@@ -264,6 +256,7 @@
     }
 
     /* NO */
+
     #no {
       background: #020302;
 
@@ -281,6 +274,7 @@
     }
 
     /* YES SCREEN */
+
     .answer {
       display: none;
 
@@ -310,14 +304,24 @@
 
 <body>
 
+  <!-- MUSIC -->
+
+  <audio id="music" loop>
+    <source src="./background.m4a" type="audio/mp4">
+  </audio>
+
+
   <!-- BLACK BLOBS -->
+
   <div class="blob"></div>
   <div class="blob"></div>
   <div class="blob"></div>
   <div class="blob"></div>
   <div class="blob"></div>
 
+
   <!-- GREEN SPARKS -->
+
   <div class="spark" style="left:5%; top:30%; animation-delay:.2s;"></div>
   <div class="spark" style="left:18%; top:70%; animation-delay:1s;"></div>
   <div class="spark" style="left:30%; top:12%; animation-delay:.5s;"></div>
@@ -329,7 +333,9 @@
   <div class="spark" style="left:12%; top:50%; animation-delay:1.8s;"></div>
   <div class="spark" style="left:85%; top:80%; animation-delay:.4s;"></div>
 
+
   <!-- MAIN CONTENT -->
+
   <div class="container">
 
     <div id="question" class="question">
@@ -340,7 +346,9 @@
 
       <div class="buttons">
 
-        <button class="yes" onclick="sayYes()">Yes I will!! 💚</button>
+        <button id="yes">
+          Yes I will!! 💚
+        </button>
 
         <button id="no">
           No I won’t
@@ -350,13 +358,19 @@
 
     </div>
 
+
     <div id="answer" class="answer">
+
       YAY!! 💚😎
+
       <br><br>
+
       Avengers Doomsday it is!!
+
     </div>
 
   </div>
+
 
   <script>
 
@@ -366,10 +380,19 @@
     const question = document.getElementById("question");
     const answer = document.getElementById("answer");
 
+    const music = document.getElementById("music");
+
+
     /* YES BUTTON */
 
     yesButton.addEventListener("click", function() {
 
+      // Start the music when the user directly taps Yes
+      music.play().catch(function(error) {
+        console.log("Music could not play:", error);
+      });
+
+      // Show the YES screen
       question.classList.add("hide");
 
       answer.classList.add("show");
@@ -392,10 +415,10 @@
         20;
 
       const randomX =
-        Math.random() * maxX;
+        Math.max(10, Math.random() * maxX);
 
       const randomY =
-        Math.random() * maxY;
+        Math.max(10, Math.random() * maxY);
 
       noButton.style.position = "fixed";
 
@@ -407,6 +430,8 @@
 
     });
 
+
+    /* NO BUTTON */
 
     noButton.addEventListener("click", function() {
 
